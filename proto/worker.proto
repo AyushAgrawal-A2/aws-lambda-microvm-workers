@@ -1,0 +1,26 @@
+syntax = "proto3";
+package worker.v1;
+
+message Envelope {
+    uint64 id = 1;
+    oneof payload {
+        ExecRequest exec = 2;
+        ExecResult result = 3;
+        Heartbeat heartbeat = 4;
+    }
+}
+
+message ExecRequest {
+    string command = 1;
+    bytes stdin = 2;
+}
+
+message ExecResult {
+    int32 exit_code = 1;
+    bytes stdout = 2;
+    bytes stderr = 3;
+}
+
+message Heartbeat {
+    uint64 ts_ms = 1;
+}
