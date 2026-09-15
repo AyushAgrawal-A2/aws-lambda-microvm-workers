@@ -3,6 +3,7 @@ resolver = "3"
 members = ["worker"]
 
 [workspace.lints.clippy]
+min_ident_chars = "warn"
 expect_used = "warn"
 module_name_repetitions = "allow"
 pedantic = { level = "warn", priority = -1 }

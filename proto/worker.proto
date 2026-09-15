@@ -2,7 +2,7 @@ syntax = "proto3";
 package worker.v1;
 
 message Envelope {
-    uint64 id = 1;
+    uint64 message_id = 1;
     oneof payload {
         ExecRequest exec = 2;
         ExecResult result = 3;

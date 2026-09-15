@@ -1,0 +1,2 @@
+# Identifiers of 1-2 characters are rejected (clippy::min_ident_chars).
+min-ident-chars-threshold = 2

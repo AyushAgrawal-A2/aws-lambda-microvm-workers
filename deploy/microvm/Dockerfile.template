@@ -1,0 +1,7 @@
+# Dockerfile shipped inside the Lambda MicroVM code artifact (zip).
+#
+# The whole application lives in the ECR image referenced below; Lambda pulls
+# it with the build role, starts the worker, waits for the /ready hook, and
+# snapshots the running process. scripts/publish-microvm-image.sh fills in the
+# digest so every MicroVM image version is reproducible.
+FROM __IMAGE_REF__

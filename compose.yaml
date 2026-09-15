@@ -1,0 +1,20 @@
+# Local AWS control plane for the controller's `aws` backend.
+#
+# Floci emulates the Lambda MicroVMs API (images, run, get, terminate) but NOT
+# the data plane: no per-VM endpoint, no auth tokens, no suspend/resume, and it
+# never runs your image. Use it to exercise the controller's SDK calls and IaC;
+# use apps/local-gateway for end-to-end runs.
+#
+#   pnpm floci
+#   MICROVM_BACKEND=aws AWS_ENDPOINT_URL=http://localhost:4566 \
+#     AWS_ACCESS_KEY_ID=test AWS_SECRET_ACCESS_KEY=test AWS_REGION=us-east-1 \
+#     MICROVM_IMAGE_ARN=arn:aws:lambda:us-east-1:000000000000:microvm-image:worker \
+#     pnpm controller
+services:
+  floci:
+    image: floci/floci:latest
+    ports:
+      - "4566:4566"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    user: root

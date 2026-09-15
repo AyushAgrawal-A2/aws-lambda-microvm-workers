@@ -1,0 +1,20 @@
+{
+  "files": [],
+  "references": [
+    {
+      "path": "./apps/web/tsconfig.app.json"
+    },
+    {
+      "path": "./apps/web/tsconfig.node.json"
+    },
+    {
+      "path": "./apps/web/tsconfig.test.json"
+    },
+    {
+      "path": "./apps/controller"
+    },
+    {
+      "path": "./apps/local-gateway"
+    }
+  ]
+}

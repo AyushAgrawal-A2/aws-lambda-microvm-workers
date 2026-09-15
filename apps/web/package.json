@@ -6,25 +6,21 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
-    "typecheck": "tsc -b",
-    "lint": "oxlint --type-aware",
-    "lint:fix": "oxlint --type-aware --fix",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test": "TSX_TSCONFIG_PATH=tsconfig.test.json node --import tsx --test \"test/**/*.test.ts\""
   },
   "dependencies": {
     "@bufbuild/protobuf": "^2.15.0",
     "@workers/proto": "workspace:*",
+    "@workers/session-api": "workspace:*",
     "react": "^19.2.8",
     "react-dom": "^19.2.8"
   },
   "devDependencies": {
-    "@types/node": "^24.13.3",
     "@types/react": "^19.2.18",
     "@types/react-dom": "^19.2.7",
     "@vitejs/plugin-react": "^6.1.1",
-    "oxlint": "^1.81.0",
-    "oxlint-tsgolint": "^7.0.2001",
-    "typescript": "~5.9.0",
+    "tsx": "^4.23.13",
     "vite": "^8.3.0"
   }
 }

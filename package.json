@@ -3,22 +3,31 @@
   "version": "0.1.0",
   "type": "module",
   "scripts": {
+    "dev": "concurrently -n worker,web -c blue,green \"pnpm worker\" \"VITE_WS_URL=/ws pnpm web\"",
+    "dev:microvm": "concurrently -n gateway,controller,web -c magenta,cyan,green \"pnpm gateway\" \"pnpm controller\" \"pnpm web\"",
     "worker": "cargo run -p worker",
     "web": "pnpm --filter web dev",
-    "dev": "concurrently -n worker,web -c blue,green \"pnpm worker\" \"pnpm web\"",
-    "proto": "pnpm --filter @workers/proto generate",
+    "gateway": "pnpm --filter local-gateway dev",
+    "controller": "pnpm --filter controller dev",
+    "floci": "docker compose up floci",
+    "worker:image": "docker build -f worker/Dockerfile --target runtime -t microvm-worker:dev .",
+    "worker:publish": "scripts/publish-microvm-image.sh",
     "build": "pnpm proto && pnpm --filter web build",
-    "check": "pnpm format:check && pnpm rust:fmt:check && pnpm typecheck && pnpm lint && pnpm rust:lint",
+    "proto": "pnpm --filter @workers/proto generate",
+    "check": "pnpm proto && pnpm format:check && pnpm rust:fmt:check && pnpm typecheck && pnpm lint && pnpm rust:lint && pnpm test",
     "fix": "pnpm format && pnpm lint:fix && pnpm rust:lint:fix && pnpm rust:fmt",
+    "test": "pnpm -r --if-present test && pnpm rust:test",
+    "test:e2e": "pnpm --filter controller test:e2e",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "typecheck": "pnpm -r --if-present typecheck",
-    "lint": "pnpm -r --if-present lint",
-    "lint:fix": "pnpm -r --if-present lint:fix",
+    "typecheck": "tsc -b",
+    "lint": "oxlint --type-aware",
+    "lint:fix": "oxlint --type-aware --fix",
     "rust:fmt": "cargo fmt --all",
     "rust:fmt:check": "cargo fmt --all --check",
     "rust:lint": "cargo clippy --workspace --all-targets -- -D warnings",
-    "rust:lint:fix": "cargo clippy --workspace --all-targets --fix --allow-dirty --allow-staged"
+    "rust:lint:fix": "cargo clippy --workspace --all-targets --fix --allow-dirty --allow-staged",
+    "rust:test": "cargo test --workspace"
   },
   "devEngines": {
     "packageManager": {
@@ -29,8 +38,12 @@
   },
   "devDependencies": {
     "@ianvs/prettier-plugin-sort-imports": "^4.7.1",
+    "@types/node": "^26.5.1",
     "concurrently": "^10.0.5",
-    "prettier": "^3.9.6"
+    "oxlint": "^1.82.0",
+    "oxlint-tsgolint": "^7.0.2001",
+    "prettier": "^3.9.6",
+    "typescript": "~5.9.3"
   },
   "engines": {
     "node": ">=26"

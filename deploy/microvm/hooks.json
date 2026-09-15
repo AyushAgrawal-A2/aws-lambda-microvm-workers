@@ -1,0 +1,19 @@
+{
+  "port": 8080,
+  "microvmImageHooks": {
+    "ready": "/aws/lambda-microvms/runtime/v1/ready",
+    "readyTimeoutInSeconds": 60,
+    "validate": "/aws/lambda-microvms/runtime/v1/validate",
+    "validateTimeoutInSeconds": 60
+  },
+  "microvmHooks": {
+    "run": "/aws/lambda-microvms/runtime/v1/run",
+    "runTimeoutInSeconds": 10,
+    "resume": "/aws/lambda-microvms/runtime/v1/resume",
+    "resumeTimeoutInSeconds": 10,
+    "suspend": "/aws/lambda-microvms/runtime/v1/suspend",
+    "suspendTimeoutInSeconds": 10,
+    "terminate": "/aws/lambda-microvms/runtime/v1/terminate",
+    "terminateTimeoutInSeconds": 10
+  }
+}
