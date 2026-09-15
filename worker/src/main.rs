@@ -88,6 +88,7 @@ async fn handle_socket(socket: WebSocket, peer: SocketAddr) {
             }
             Message::Close(_) => {
                 info!(%peer, "client requested close");
+                let _ = tx.close().await;
                 break;
             }
             _ => None,

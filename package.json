@@ -1,0 +1,38 @@
+{
+  "name": "aws-lambda-microvm-workers",
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "worker": "cargo run -p worker",
+    "web": "pnpm --filter web dev",
+    "dev": "concurrently -n worker,web -c blue,green \"pnpm worker\" \"pnpm web\"",
+    "proto": "pnpm --filter @workers/proto generate",
+    "build": "pnpm proto && pnpm --filter web build",
+    "check": "pnpm format:check && pnpm rust:fmt:check && pnpm typecheck && pnpm lint && pnpm rust:lint",
+    "fix": "pnpm format && pnpm lint:fix && pnpm rust:lint:fix && pnpm rust:fmt",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "typecheck": "pnpm -r --if-present typecheck",
+    "lint": "pnpm -r --if-present lint",
+    "lint:fix": "pnpm -r --if-present lint:fix",
+    "rust:fmt": "cargo fmt --all",
+    "rust:fmt:check": "cargo fmt --all --check",
+    "rust:lint": "cargo clippy --workspace --all-targets -- -D warnings",
+    "rust:lint:fix": "cargo clippy --workspace --all-targets --fix --allow-dirty --allow-staged"
+  },
+  "devEngines": {
+    "packageManager": {
+      "name": "pnpm",
+      "version": "^11.15.1",
+      "onFail": "download"
+    }
+  },
+  "devDependencies": {
+    "@ianvs/prettier-plugin-sort-imports": "^4.7.1",
+    "concurrently": "^10.0.5",
+    "prettier": "^3.9.6"
+  },
+  "engines": {
+    "node": ">=26"
+  }
+}
